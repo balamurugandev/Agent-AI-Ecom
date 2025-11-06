@@ -1,0 +1,39 @@
+[
+  {
+    "id": "cat-1",
+    "name": "New Arrivals",
+    "slug": "new-arrivals",
+    "description": "Latest products just in"
+  },
+  {
+    "id": "cat-2",
+    "name": "Men",
+    "slug": "men",
+    "description": "Men's clothing and accessories"
+  },
+  {
+    "id": "cat-3",
+    "name": "Women",
+    "slug": "women",
+    "description": "Women's clothing and accessories"
+  },
+  {
+    "id": "cat-4",
+    "name": "Electronics",
+    "slug": "electronics",
+    "description": "Latest tech gadgets"
+  },
+  {
+    "id": "cat-5",
+    "name": "Accessories",
+    "slug": "accessories",
+    "description": "Fashion and lifestyle accessories"
+  },
+  {
+    "id": "cat-6",
+    "name": "Sale",
+    "slug": "sale",
+    "description": "Special deals and discounts"
+  }
+]
+
