@@ -23,6 +23,8 @@ A production-ready, responsive e-commerce web application built with React, Type
 - **State Management**: Zustand with localStorage persistence
 - **Routing**: React Router v6
 - **Form Handling**: Native HTML5 forms with validation
+- **Database**: Supabase (PostgreSQL)
+- **Backend**: Supabase (REST API, Real-time, Auth)
 
 ## Getting Started
 
@@ -30,6 +32,7 @@ A production-ready, responsive e-commerce web application built with React, Type
 
 - Node.js 18+ or Bun
 - pnpm (recommended) or npm/yarn
+- A Supabase account ([Sign up for free](https://supabase.com))
 
 ### Installation
 
@@ -44,12 +47,22 @@ cd Agent-ai-test
 pnpm install
 ```
 
-3. Start the development server:
+3. Set up Supabase:
+   - Create a new project at [supabase.com](https://supabase.com)
+   - Go to **Settings** → **API** and copy your **Project URL** and **anon key**
+   - Create a `.env` file in the root directory:
+   ```env
+   VITE_SUPABASE_URL=your_project_url
+   VITE_SUPABASE_ANON_KEY=your_anon_key
+   ```
+   - Run the database schema (see [Supabase Setup](#supabase-setup) below)
+
+4. Start the development server:
 ```bash
 pnpm dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+5. Open your browser and navigate to `http://localhost:5173`
 
 ### Build for Production
 
@@ -134,35 +147,72 @@ Products are stored in `src/data/products.json`. To add new products:
 }
 ```
 
-## Switching to a Real API
+## Supabase Setup
 
-The app currently uses mock data with simulated latency. To switch to a real API:
+The app is configured to use Supabase as the backend. Follow these steps to set up your database:
 
-1. Update `src/lib/api.ts` to replace mock functions with actual API calls:
+### 1. Create Supabase Project
 
-```typescript
-export async function fetchProducts(): Promise<Product[]> {
-  const response = await fetch('https://api.example.com/products')
-  return response.json()
-}
-```
+1. Go to [supabase.com](https://supabase.com) and create a free account
+2. Create a new project
+3. Wait for the project to be provisioned (takes ~2 minutes)
 
-2. Update environment variables if needed (create `.env` file):
+### 2. Configure Environment Variables
+
+1. In your Supabase project, go to **Settings** → **API**
+2. Copy your **Project URL** and **anon/public key**
+3. Create a `.env` file in the project root:
 
 ```env
-VITE_API_URL=https://api.example.com
+VITE_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-3. Update API calls to use the environment variable:
+### 3. Set Up Database Schema
 
-```typescript
-const API_URL = import.meta.env.VITE_API_URL
+1. Go to your Supabase project dashboard
+2. Navigate to **SQL Editor**
+3. Copy and paste the contents of `supabase/schema.sql`
+4. Click **Run** to execute the schema
 
-export async function fetchProducts(): Promise<Product[]> {
-  const response = await fetch(`${API_URL}/products`)
-  return response.json()
-}
+This creates:
+- `categories` table
+- `products` table  
+- `product_variants` table
+- Indexes for performance
+- Row Level Security (RLS) policies
+
+### 4. Seed Your Database
+
+You have several options:
+
+**Option A: Use the seeding script**
+```bash
+# Install tsx if needed
+npm install -D tsx
+
+# Run the seed script
+npx tsx scripts/seed-database.ts
 ```
+
+**Option B: Use Supabase Dashboard**
+1. Go to **Table Editor**
+2. Manually add data or import CSV/JSON files
+
+**Option C: Use SQL**
+- See `supabase/seed.sql` for examples
+
+For detailed instructions, see [supabase/README.md](./supabase/README.md)
+
+### 5. Verify Setup
+
+- Check that tables exist in **Table Editor**
+- Verify RLS policies in **Authentication** → **Policies**
+- Test queries in **SQL Editor**
+
+### Fallback to Mock Data
+
+If Supabase is not configured or unavailable, the app automatically falls back to the mock JSON data files. This allows the app to work without a database for development/testing.
 
 ## Key Features Explained
 

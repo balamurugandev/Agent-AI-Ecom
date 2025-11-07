@@ -1,0 +1,12 @@
+
+Re-optimizing dependencies because lockfile has changed
+
+  VITE v5.4.21  ready in 1351 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+12:20:40 AM [vite] .env changed, restarting server...
+12:20:40 AM [vite] .env changed, restarting server... (x2)
+Re-optimizing dependencies because lockfile has changed
+12:20:40 AM [vite] server restarted.
